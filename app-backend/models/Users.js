@@ -6,4 +6,4 @@ const userDataSchema = new mongoose.Schema({
     user_email : {type : String, unique : true}
 })
 
-module.exports = mongoose.model("users",userDataSchema);
+module.exports = mongoose.model("Users",userDataSchema);

@@ -6,6 +6,8 @@ const dotenv = require('dotenv');
 dotenv.config();  //Importing Dependencies
 
 const routesAuth = require("./routes/AuthRoutes"); //Importing Routes auth config file.
+const friendInvitationRoutes = require("./routes/FriendInvitationRoutes");
+const chatServer = require('./ChatServer');
 
 const PORT = process.env.PORT || process.env.APP_PORT; 
 //This line would tell the hosting environment, on which port to listen the request, in order to start the server. L - Port Provided by Hosting Env. or R - Port defined by us in .env file(if application is not hosted/deployed).
@@ -16,10 +18,12 @@ app.use(cors());
 
 //Registering the routes
 app.use('/app/auth', routesAuth);
+app.use('/app/friend-invitation', friendInvitationRoutes);
 
 //Env var syntax : DB_URI=mongodb+srv://<uname>:<pwd>@cluster0.43ojvwx.mongodb.net/<DBname>?retryWrites=true&w=majority
 
 const server = http.createServer(app);
+chatServer.signupServer(server);
 
 mongoose.connect(process.env.DB_URI).then(()=>{
     server.listen(PORT, ()=>{ //In order to start the server only when database is connected.
